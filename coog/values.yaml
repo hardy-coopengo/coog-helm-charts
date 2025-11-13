@@ -796,6 +796,7 @@ frontCore:
       FACEBOOK_MODULE: false
       GOOGLE_MODULE: false
       JWT_EXPIRATION: 3600
+      ENABLE_API_KEY_AUTH: "false"
 
     ingress:
       # -- Default host for the ingress resource for gateway containers
