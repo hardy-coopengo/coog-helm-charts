@@ -29,7 +29,7 @@ tests:
           path: metadata.labels["app.kubernetes.io/version"]
           pattern: coog-.*$
 
-  - it: Test variables (1/2)
+  - it: Test variables (1/3)
     set:
       backCore:
         extraEnvVar:
@@ -60,7 +60,7 @@ tests:
       - notExists:
           path: data.TRYTOND_GATEWAY__URL
 
-  - it: Test variables (2/2)
+  - it: Test variables (2/3)
     set:
       postgresql:
         host: external-postgresql.com
@@ -99,3 +99,14 @@ tests:
       - equal:
           path: data.TRYTOND_GATEWAY__URL
           value: http://test-coog-gateway
+
+  - it: Test variables (3/3)
+    set:
+      libroconv:
+        enabled: false
+        externalAddress: "test-service-externe.com"
+        externalPort: 5001
+    asserts:
+      - equal:
+          path: data.TRYTOND_REPORT__API
+          value: http://test-service-externe.com:5001/unoconv/{oext}/test
