@@ -109,7 +109,7 @@ spec:
             {{- include "general.tplvalues.render" (dict "value" (default .Values.startupProbe .Values.backCore.celery.startupProbe) "context" $) | nindent 12 }}
           livenessProbe:
             exec:
-              command: ['ep', 'liveness_celery', '--app-name', 'celery']
+              command: ['ep', 'liveness_celery', '--app-name', 'coog-celery']
             {{- include "general.tplvalues.render" (dict "value" (default .Values.livenessProbe .Values.backCore.celery.livenessProbe) "context" $) | nindent 12 }}
           readinessProbe:
             exec:
@@ -173,7 +173,7 @@ spec:
             {{- include "general.tplvalues.render" (dict "value" (default .Values.startupProbe .Values.backCore.celery.startupProbe) "context" $) | nindent 12 }}
           livenessProbe:
             exec:
-              command: ['ep', 'liveness_celery', '--app-name', 'celery_maintenance']
+              command: ['ep', 'liveness_celery', '--app-name', 'coog-celery-database-maintenance']
             {{- include "general.tplvalues.render" (dict "value" (default .Values.livenessProbe .Values.backCore.celery.livenessProbe) "context" $) | nindent 12 }}
           readinessProbe:
             exec:

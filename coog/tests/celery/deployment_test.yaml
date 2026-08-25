@@ -538,7 +538,7 @@ tests:
             - ep
             - liveness_celery
             - --app-name
-            - celery
+            - coog-celery
       - equal:
           path: spec.template.spec.containers[?(@.name == "coog-celery")].readinessProbe.exec.command
           value:
@@ -550,7 +550,7 @@ tests:
             - ep
             - liveness_celery
             - --app-name
-            - celery_maintenance
+            - coog-celery-database-maintenance
       - equal:
           path: spec.template.spec.containers[?(@.name == "coog-celery-database-maintenance")].readinessProbe.exec.command
           value:
