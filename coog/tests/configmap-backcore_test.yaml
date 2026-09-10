@@ -66,6 +66,9 @@ tests:
           path: data.LOG_LEVEL
           value: INFO
       - equal:
+          path: data.TRYTOND_DOCUMENT_API__TEMPORARY_UPLOAD_ROOT
+          value: /tmp/uploads/
+      - equal:
           path: data.TRYTOND_MIGRATION__DATABASE
           value: staging
       - equal:
@@ -135,6 +138,16 @@ tests:
       - equal:
           path: data.TRYTOND_REPORT__API
           value: http://test-service-externe.com:5001/unoconv/{oext}/test
+
+  - it: Test temporary upload root is overridable
+    set:
+      backCore:
+        extraEnvVar:
+          TRYTOND_DOCUMENT_API__TEMPORARY_UPLOAD_ROOT: /workspace/io/uploads/
+    asserts:
+      - equal:
+          path: data.TRYTOND_DOCUMENT_API__TEMPORARY_UPLOAD_ROOT
+          value: /workspace/io/uploads/
 
   - it: Test clamav disabled by default
     asserts:
