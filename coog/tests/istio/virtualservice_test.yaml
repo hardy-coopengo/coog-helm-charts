@@ -109,6 +109,10 @@ tests:
                   prefix: "/customers/myspace/"
             rewrite:
               uri: "/"
+            headers:
+              request:
+                set:
+                  x-forwarded-host: "%REQ(:authority)%"
             route:
               - destination:
                   host: test-coog-b2c
@@ -146,6 +150,10 @@ tests:
                   prefix: "/v1/customer/"
             rewrite:
               uri: "/"
+            headers:
+              request:
+                set:
+                  x-forwarded-host: "%REQ(:authority)%"
             route:
               - destination:
                   host: test-coog-customer-backend
@@ -183,6 +191,10 @@ tests:
                   prefix: "/customer/"
             rewrite:
               uri: "/"
+            headers:
+              request:
+                set:
+                  x-forwarded-host: "%REQ(:authority)%"
             route:
               - destination:
                   host: test-coog-customer-frontend
@@ -220,6 +232,10 @@ tests:
                   prefix: "/portal/"
             rewrite:
               uri: "/"
+            headers:
+              request:
+                set:
+                  x-forwarded-host: "%REQ(:authority)%"
             route:
               - destination:
                   host: test-coog-b2b
@@ -257,6 +273,10 @@ tests:
                   prefix: "/gateway/"
             rewrite:
               uri: "/"
+            headers:
+              request:
+                set:
+                  x-forwarded-host: "%REQ(:authority)%"
             route:
               - destination:
                   host: test-coog-gateway
@@ -290,6 +310,10 @@ tests:
             match:
               - uri:
                   prefix: "/docusign"
+            headers:
+              request:
+                set:
+                  x-forwarded-host: "%REQ(:authority)%"
             route:
               - destination:
                   host: test-coog
@@ -303,6 +327,10 @@ tests:
             match:
               - uri:
                   prefix: "/cryptolog"
+            headers:
+              request:
+                set:
+                  x-forwarded-host: "%REQ(:authority)%"
             route:
               - destination:
                   host: test-coog
@@ -316,6 +344,10 @@ tests:
             match:
               - uri:
                   prefix: "/paybox"
+            headers:
+              request:
+                set:
+                  x-forwarded-host: "%REQ(:authority)%"
             route:
               - destination:
                   host: test-coog
@@ -329,6 +361,10 @@ tests:
             match:
               - uri:
                   prefix: "/doc"
+            headers:
+              request:
+                set:
+                  x-forwarded-host: "%REQ(:authority)%"
             route:
               - destination:
                   host: test-coog
@@ -342,6 +378,10 @@ tests:
             match:
               - uri:
                   prefix: "/"
+            headers:
+              request:
+                set:
+                  x-forwarded-host: "%REQ(:authority)%"
             route:
               - destination:
                   host: test-coog
@@ -373,6 +413,10 @@ tests:
                   prefix: "/customers/myspace/"
             rewrite:
               uri: "/"
+            headers:
+              request:
+                set:
+                  x-forwarded-host: "%REQ(:authority)%"
             route:
               - destination:
                   host: test-coog-b2c
@@ -404,6 +448,10 @@ tests:
                   prefix: "/customers/myspace/"
             rewrite:
               uri: "/"
+            headers:
+              request:
+                set:
+                  x-forwarded-host: "%REQ(:authority)%"
             route:
               - destination:
                   host: test-coog-b2c
@@ -484,3 +532,27 @@ tests:
       - equal:
           path: spec.http[17].name
           value: coog
+
+  - it: Should set x-forwarded-host header on service routes only
+    set:
+      istio:
+        enabled: true
+        mainHost: coog.local
+      b2c:
+        enabled: true
+    asserts:
+      # Service routes carry the header...
+      - contains:
+          path: spec.http
+          any: true
+          content:
+            headers:
+              request:
+                set:
+                  x-forwarded-host: "%REQ(:authority)%"
+      # ...while redirects (no destination) do not.
+      - equal:
+          path: spec.http[4].name
+          value: redirect-b2c
+      - notExists:
+          path: spec.http[4].headers

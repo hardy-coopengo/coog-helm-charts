@@ -39,6 +39,10 @@ spec:
         prefix: "/customers/myspace/"
     rewrite:
       uri: "/"
+    headers:
+      request:
+        set:
+          x-forwarded-host: "%REQ(:authority)%"
     route:
     - destination:
         host: {{ printf "%s-%s" (include "general.names.short" $) "b2c" }}
@@ -68,6 +72,10 @@ spec:
         prefix: "/v1/customer/"
     rewrite:
       uri: "/"
+    headers:
+      request:
+        set:
+          x-forwarded-host: "%REQ(:authority)%"
     route:
     - destination:
         host: {{ printf "%s-%s" (include "general.names.short" $) "customer-backend" }}
@@ -97,6 +105,10 @@ spec:
         prefix: "/customer/"
     rewrite:
       uri: "/"
+    headers:
+      request:
+        set:
+          x-forwarded-host: "%REQ(:authority)%"
     route:
     - destination:
         host: {{ printf "%s-%s" (include "general.names.short" $) "customer-frontend" }}
@@ -126,6 +138,10 @@ spec:
         prefix: "/portal/"
     rewrite:
       uri: "/"
+    headers:
+      request:
+        set:
+          x-forwarded-host: "%REQ(:authority)%"
     route:
     - destination:
         host: {{ printf "%s-%s" (include "general.names.short" $) "b2b" }}
@@ -161,6 +177,10 @@ spec:
         prefix: "/gateway/"
     rewrite:
       uri: "/"
+    headers:
+      request:
+        set:
+          x-forwarded-host: "%REQ(:authority)%"
     route:
     - destination:
         host: {{ printf "%s-%s" (include "general.names.short" $) "gateway" }}
@@ -187,6 +207,10 @@ spec:
     match:
     - uri:
         prefix: "/docusign"
+    headers:
+      request:
+        set:
+          x-forwarded-host: "%REQ(:authority)%"
     route:
     - destination:
         host: {{ printf "%s" (include "general.names.short" $) }}
@@ -203,6 +227,10 @@ spec:
     match:
     - uri:
         prefix: "/cryptolog"
+    headers:
+      request:
+        set:
+          x-forwarded-host: "%REQ(:authority)%"
     route:
     - destination:
         host: {{ printf "%s" (include "general.names.short" $) }}
@@ -219,6 +247,10 @@ spec:
     match:
     - uri:
         prefix: "/paybox"
+    headers:
+      request:
+        set:
+          x-forwarded-host: "%REQ(:authority)%"
     route:
     - destination:
         host: {{ printf "%s" (include "general.names.short" $) }}
@@ -235,6 +267,10 @@ spec:
     match:
     - uri:
         prefix: "/doc"
+    headers:
+      request:
+        set:
+          x-forwarded-host: "%REQ(:authority)%"
     route:
     - destination:
         host: {{ printf "%s" (include "general.names.short" $) }}
@@ -251,6 +287,10 @@ spec:
     match:
     - uri:
         prefix: "/"
+    headers:
+      request:
+        set:
+          x-forwarded-host: "%REQ(:authority)%"
     route:
     - destination:
         host: {{ printf "%s" (include "general.names.short" $) }}

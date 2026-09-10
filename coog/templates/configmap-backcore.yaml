@@ -32,6 +32,7 @@ data:
   CLAMAV_PORT: {{ $clamav.port | quote }}
   TRYTOND_DATABASE__BINARY_SCANNER: "clamav_wrapper.py"
   TRYTOND_DATABASE__BINARY_SCANNER_DIRECTORY: "/tmp/"
+  TRYTOND_WEB__NUM_PROXIES: "1"
   {{- end }}
   {{- range $key, $value := .Values.backCore.extraEnvVar }}
   {{ $key }}: {{ $value | quote }}
